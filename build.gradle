@@ -31,6 +31,7 @@ apply from: scriptsLocation + 'spotless.gradle'
 
 dependencies {
 
+    // plotly
     implementation "org.plotly-scala:plotly-render_${scalaVersion}:0.8.2"
 
     // json parsing
