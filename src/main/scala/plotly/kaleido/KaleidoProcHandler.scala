@@ -49,12 +49,18 @@ case class KaleidoProcHandler private (kaleidoBin: String) extends LazyLogging {
 
   def generate(json: String): Try[KaleidoResult] = {
     if (!proc.isAlive()) {
-      Failure(new RuntimeException("")) // todo
+      Failure(
+        new RuntimeException(
+          "Cannot reuse already executed KaleidoProcHandler. " +
+            "Please create a new one in order to generate file output!"
+        )
+      )
     } else {
       procInput.write(json.getBytes("UTF-8"))
       procInput.close()
       procOutQueue.poll(10, TimeUnit.SECONDS) match {
-        case null => Failure(new RuntimeException("")) // todo
+        case null =>
+          Failure(new RuntimeException("Kaleido file generation timeout!"))
         case returnJsonString: String =>
           decode[KaleidoResult](returnJsonString) match {
             case Right(result) =>
@@ -62,7 +68,7 @@ case class KaleidoProcHandler private (kaleidoBin: String) extends LazyLogging {
               Success(result)
             case Left(value) =>
               shutdown()
-              Failure(value.fillInStackTrace()) // todo JH
+              Failure(value.fillInStackTrace())
           }
       }
     }
