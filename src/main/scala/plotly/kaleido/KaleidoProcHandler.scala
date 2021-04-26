@@ -36,7 +36,7 @@ case class KaleidoProcHandler private (kaleidoBin: String) extends LazyLogging {
           procOutQueue.add(msg)
           msg
         })
-        .foreach(msg => logger.error(msg))
+        .foreach(msg => logger.info(msg))
 
   private val procErrOut: InputStream => Unit = { err =>
     scala.io.Source
@@ -81,7 +81,7 @@ object KaleidoProcHandler {
     handler.procOutQueue.poll(3, TimeUnit.SECONDS) match {
       case null => // kaleido startup failed
         handler.shutdown()
-        Failure(throw new RuntimeException(s"Kaleido startup timeout!"))
+        Failure(new RuntimeException(s"Kaleido startup timeout!"))
       case startRes =>
         // startup successful?
         decode[KaleidoUp](startRes) match {
