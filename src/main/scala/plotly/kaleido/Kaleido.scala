@@ -7,14 +7,12 @@ import plotly.layout.Layout
 import java.io.{BufferedOutputStream, File, FileOutputStream}
 import java.nio.file.Path
 import java.util.Base64
-import scala.util.{Success, Try}
+import scala.util.{Failure, Success, Try}
 
 object Kaleido {
 
-  val kaleidoBin =
-    "/Users/jhiry/IdeaProjects/00_Tonne/kaleido-scala/tmp/0.0.3/kaleido" // todo download on request
-
   implicit class KaleidoOps(val trace: Seq[Trace]) extends AnyVal {
+
     def save(
         outputPath: String,
         fileName: String,
@@ -24,6 +22,31 @@ object Kaleido {
         height: Int,
         scale: Float
     ): Try[Unit] =
+      KaleidoBin
+        .getOrDownload()
+        .flatMap(
+          Kaleido.save(
+            outputPath,
+            fileName,
+            Plotly.jsonSnippet(trace, layout, Config()),
+            format,
+            width,
+            height,
+            scale,
+            _
+          )
+        )
+
+    def save(
+        outputPath: String,
+        fileName: String,
+        layout: Layout,
+        format: KaleidoFormat,
+        width: Int,
+        height: Int,
+        scale: Float,
+        kaleidoBin: String
+    ): Try[Unit] =
       Kaleido.save(
         outputPath,
         fileName,
@@ -31,7 +54,8 @@ object Kaleido {
         format,
         width,
         height,
-        scale
+        scale,
+        kaleidoBin
       )
   }
 
@@ -43,6 +67,31 @@ object Kaleido {
       width: Int,
       height: Int,
       scale: Float
+  ): Try[Unit] =
+    KaleidoBin
+      .getOrDownload()
+      .flatMap(
+        Kaleido.save(
+          outputPath,
+          fileName,
+          jsonData,
+          format,
+          width,
+          height,
+          scale,
+          _
+        )
+      )
+
+  def save(
+      outputPath: String,
+      fileName: String,
+      jsonData: String,
+      format: KaleidoFormat,
+      width: Int,
+      height: Int,
+      scale: Float,
+      kaleidoBin: String
   ): Try[Unit] = {
     val plot =
       KaleidoPlot(jsonData, format, width, height, scale).asJsonString()
@@ -74,11 +123,14 @@ object Kaleido {
   private def writeFile(
       file: Array[Byte],
       outputFilePath: Path
-  ): Success[Unit] = {
+  ): Try[Unit] = {
     val bos = new BufferedOutputStream(
       new FileOutputStream(outputFilePath.toString)
     )
-    bos.write(file)
-    Success(bos.close())
+    Try {
+      bos.write(file)
+      bos.close()
+    }
   }
+
 }
