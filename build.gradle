@@ -10,6 +10,7 @@ plugins {
     id 'scala'
     id 'java-library'
     id 'com.diffplug.spotless' version '5.12.4' // code format
+    id "com.github.prokod.gradle-crossbuild" version "0.12.1" // compile multiple scala versions support
 }
 
 repositories {
@@ -20,38 +21,44 @@ repositories {
 
 ext {
     javaVersion = JavaVersion.VERSION_11
-    scalaVersion = '2.13'
-    scalaBinaryVersion = '2.13.1'
     slf4jVersion = '1.7.30'
     circeVersion = '0.13.0'
+    mainScalaVersion = '2.13'
     scriptsLocation = 'gradle' + File.separator + 'scripts' + File.separator // location of script plugins
+}
+
+// set crossbuild versions
+crossBuild {
+    builds {
+        v212
+        v213
+    }
 }
 
 apply from: scriptsLocation + 'spotless.gradle'
 
 dependencies {
 
-    // plotly
-    implementation "org.plotly-scala:plotly-render_${scalaVersion}:0.8.2"
+    // plotly scala
+    implementation "org.plotly-scala:plotly-render_${mainScalaVersion}:0.8.2"
 
     // json parsing
-    implementation group: 'io.circe', name: "circe-core_${scalaVersion}", version: "${circeVersion}"
-    implementation group: 'io.circe', name: "circe-generic_${scalaVersion}", version: "${circeVersion}"
-    implementation group: 'io.circe', name: "circe-parser_${scalaVersion}", version: "${circeVersion}"
+    implementation group: 'io.circe', name: "circe-core_${mainScalaVersion}", version: "${circeVersion}"
+    implementation group: 'io.circe', name: "circe-generic_${mainScalaVersion}", version: "${circeVersion}"
+    implementation group: 'io.circe', name: "circe-parser_${mainScalaVersion}", version: "${circeVersion}"
 
     // logging
     compile "org.slf4j:slf4j-api:${slf4jVersion}"  // slf4j wrapper
     compile 'com.lmax:disruptor:3.4.3' // async logging
-    compile 'org.apache.logging.log4j:log4j-api:+' // log4j
-    compile 'org.apache.logging.log4j:log4j-core:+' // log4j
-    compile 'org.apache.logging.log4j:log4j-slf4j-impl:+' // log4j -> slf4j
+    compile 'org.apache.logging.log4j:log4j-api:2.14.1' // log4j
+    compile 'org.apache.logging.log4j:log4j-core:2.14.1' // log4j
+    compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.14.1' // log4j -> slf4j
 
-    compile "com.typesafe.scala-logging:scala-logging_${scalaVersion}:+" // akka scala logging
-    compile 'com.typesafe.scala-logging:scala-logging-slf4j_2.11:2.1.2'// scala logging
+    compile "com.typesafe.scala-logging:scala-logging_${mainScalaVersion}:3.9.3" // akka scala logging
     compile "org.slf4j:log4j-over-slf4j:${slf4jVersion}" // slf4j -> log4j
 
     // CORE Scala //
-    compile "org.scala-lang:scala-library:${scalaBinaryVersion}"
-    compile "org.scala-lang:scala-reflect:${scalaBinaryVersion}"
+    compile "org.scala-lang:scala-library:${mainScalaVersion}"
+    compile "org.scala-lang:scala-reflect:${mainScalaVersion}"
 
 }
