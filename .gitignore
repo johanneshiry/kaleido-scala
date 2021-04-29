@@ -7,8 +7,12 @@
 # Ignore Gradle build output directory
 build
 
-.idea
-
 .kaleidoCache
 
 target/
+
+.bsp/
+.idea/
+metals.sbt
+.vscode/
+.sbt/
