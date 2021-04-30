@@ -7,7 +7,7 @@ import plotly.layout.Layout
 import java.io.{BufferedOutputStream, File, FileOutputStream}
 import java.nio.file.Path
 import java.util.Base64
-import scala.util.{Failure, Success, Try}
+import scala.util.Try
 
 object Kaleido {
 
@@ -97,20 +97,18 @@ object Kaleido {
       KaleidoPlot(jsonData, format, width, height, scale).asJsonString()
     KaleidoProcHandler(kaleidoBin)
       .flatMap(_.generate(plot))
-      .flatMap(
-        kaleidoResult => {
-          val outputFilePath = outputFile(outputPath, fileName, format)
-          kaleidoResult.format match {
-            case SVG | EPS =>
-              writeFile(kaleidoResult.result.getBytes, outputFilePath)
-            case _ =>
-              writeFile(
-                Base64.getDecoder.decode(kaleidoResult.result),
-                outputFilePath
-              )
-          }
+      .flatMap(kaleidoResult => {
+        val outputFilePath = outputFile(outputPath, fileName, format)
+        kaleidoResult.format match {
+          case SVG | EPS =>
+            writeFile(kaleidoResult.result.getBytes, outputFilePath)
+          case _ =>
+            writeFile(
+              Base64.getDecoder.decode(kaleidoResult.result),
+              outputFilePath
+            )
         }
-      )
+      })
   }
 
   private def outputFile(
@@ -118,7 +116,9 @@ object Kaleido {
       filename: String,
       format: KaleidoFormat
   ): Path =
-    new File(path + File.separator + filename + "." + format.json).toPath.toAbsolutePath
+    new File(
+      path + File.separator + filename + "." + format.json
+    ).toPath.toAbsolutePath
 
   private def writeFile(
       file: Array[Byte],

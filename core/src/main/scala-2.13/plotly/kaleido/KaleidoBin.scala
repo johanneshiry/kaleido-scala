@@ -2,9 +2,9 @@ package plotly.kaleido
 
 import com.typesafe.scalalogging.LazyLogging
 
-import java.nio.channels.Channels
 import java.io.{File, FileInputStream, FileOutputStream}
 import java.net.URL
+import java.nio.channels.Channels
 import java.nio.file.Path
 import java.util.zip.ZipInputStream
 import scala.language.postfixOps
