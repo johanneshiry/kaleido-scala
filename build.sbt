@@ -3,7 +3,7 @@ import Dependencies.kaleidoDeps
 lazy val mainScalaVer = "2.13.6"
 lazy val supportedScalaVer = List(mainScalaVer, "2.12.14")
 
-ThisBuild / organization := "org.plotly-sala"
+ThisBuild / organization := "org.plotly-scala"
 ThisBuild / homepage := Some(url("https://github.com/johanneshiry/kaleido-scala"))
 ThisBuild / licenses := Seq("BSD 3-Clause \"New\" or \"Revised\" License" ->
   url("https://github.com/johanneshiry/kaleido-scala/blob/main/LICENSE"))
