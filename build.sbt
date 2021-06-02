@@ -1,6 +1,7 @@
 import Dependencies.kaleidoDeps
 
 lazy val mainScalaVer = "2.13.5"
+lazy val supportedScalaVer = Seq(mainScalaVer, "2.12.12", "2.12.13", "2.12.14")
 
 ThisBuild / organization := "org.plotly-sala"
 ThisBuild / homepage := Some(url("https://github.com/johanneshiry/kaleido-scala"))
@@ -17,9 +18,10 @@ ThisBuild / scalaVersion := mainScalaVer
 lazy val kaleido = (projectMatrix in file("core"))
   .settings(
     name := "kaleido",
-    libraryDependencies ++= kaleidoDeps
+    libraryDependencies ++= kaleidoDeps,
+    crossScalaVersions := supportedScalaVer
   )
-  .jvmPlatform(scalaVersions = Seq(mainScalaVer, "2.12.12", "2.12.13", "2.12.14"))
+  .jvmPlatform(scalaVersions = supportedScalaVer)
 
 
 
