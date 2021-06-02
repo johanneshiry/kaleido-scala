@@ -12,7 +12,6 @@ ThisBuild / developers := List(Developer(
   "info@johannes-hiry.de",
   url("https://github.com/johanneshiry")
 ))
-ThisBuild / version := "0.1.0-SNAPSHOT"
 ThisBuild / scalaVersion := mainScalaVer
 
 lazy val kaleido = (projectMatrix in file("core"))
