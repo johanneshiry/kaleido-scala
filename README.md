@@ -2,7 +2,7 @@
 
 Scala bindings for plot.ly Kaleido
 
-[![Release CI](https://github.com/johanneshiry/kaleido-scala/actions/workflows/deploy.yml/badge.svg)](https://github.com/johanneshiry/kaleido-scala/actions/workflows/release.yml)
+[![deploy CI](https://github.com/johanneshiry/kaleido-scala/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/johanneshiry/kaleido-scala/actions/workflows/deploy.yml)
 
 *kaleido-scala* is a Scala library which provides static image (e.g. png, svg, pdf, etc.) generation capabilities
 to [plotly-scala](http://plotly-scala.org/). It follows the same approach as the original
