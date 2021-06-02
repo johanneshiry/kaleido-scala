@@ -1,7 +1,7 @@
 import Dependencies.kaleidoDeps
 
 lazy val mainScalaVer = "2.13.5"
-lazy val supportedScalaVer = Seq(mainScalaVer, "2.12.12", "2.12.13", "2.12.14")
+lazy val supportedScalaVer = Seq(mainScalaVer, "2.12.14")
 
 ThisBuild / organization := "org.plotly-sala"
 ThisBuild / homepage := Some(url("https://github.com/johanneshiry/kaleido-scala"))
