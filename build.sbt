@@ -5,7 +5,7 @@ lazy val supportedScalaVer = List(mainScalaVer, "2.12.14")
 
 ThisBuild / organization := "org.plotly-scala"
 ThisBuild / homepage := Some(url("https://github.com/johanneshiry/kaleido-scala"))
-ThisBuild / licenses := Seq("BSD 3-Clause \"New\" or \"Revised\" License" ->
+ThisBuild / licenses := Seq("BSD 3-Clause License" ->
   url("https://github.com/johanneshiry/kaleido-scala/blob/main/LICENSE"))
 ThisBuild / developers := List(Developer(
   "johanneshiry",
