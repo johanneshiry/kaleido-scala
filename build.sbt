@@ -23,4 +23,5 @@ lazy val kaleido = (project in file("core"))
   )
 
 // root project
+crossScalaVersions := Nil
 skip / publish := true
