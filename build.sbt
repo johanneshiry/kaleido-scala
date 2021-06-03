@@ -21,3 +21,6 @@ lazy val kaleido = (project in file("core"))
     libraryDependencies ++= kaleidoDeps,
     crossScalaVersions := supportedScalaVer
   )
+
+// root project
+skip / publish := true
