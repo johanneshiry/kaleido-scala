@@ -19,7 +19,7 @@ feature requests please do not hesitate and consider handing in an issue.
 
 Add the latest version to your project. You can find an overview on all versions
 [here](https://mvnrepository.com/artifact/org.plotly-scala/kaleido). Please do not just copy the string below, but adapt
-the version number the desired one.
+the version number to the desired one.
 
 #### sbt
 
